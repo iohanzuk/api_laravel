@@ -12,7 +12,6 @@ abstract class TestCase extends BaseTestCase
     protected function initDatabase()
     {
         Artisan::call('migrate');
-        Artisan::call('db:seed --class=HelloSeeder');
     }
 
     protected function resetDatabase()
