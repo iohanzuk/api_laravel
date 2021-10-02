@@ -2,27 +2,26 @@ version: '3.7'
 services:
   db:
     image: mysql:latest
+    container_name: db
     ports: 
-    - "3306:3306"
+      - "3306:3306"
     environment:       
       MYSQL_USER: crud
       MYSQL_DATABASE: crud_laravel
       MYSQL_ROOT_PASSWORD: root
-      TZ: America/Sao_Paulo        
-  redis:
-    image: redis:latest      
+      TZ: America/Sao_Paulo
   dev:    
     build: 
       context: '.'        
       args:
         uid: ${UID}
     user: ${UID}
+    container_name: api_laravel
     ports:
-    - "8000:8000"
+      - "8000:8000"
     volumes:    
     - './laravel:/app'
     working_dir: /app
     links:
-    - db
-    - redis
-    command: /bin/sh -c "composer install && npm install && npm run dev && php artisan migrate:fresh --seed && php artisan serve --host 0.0.0.0"
+      - db
+    command: /bin/sh -c "composer install && npm install && npm run dev && php artisan migrate && php artisan serve --host 0.0.0.0"
