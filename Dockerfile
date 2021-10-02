@@ -26,7 +26,9 @@ RUN apt-get update && apt-get install -y \
     git \
     curl \
     nodejs \
-    graphviz
+    graphviz \
+    sqlite3 \
+    libsqlite3-dev
 
 RUN npm install -g yarn
 
@@ -34,7 +36,8 @@ RUN apt-get clean && rm -rf /var/lib/apt/lists/*
 
 RUN docker-php-ext-configure ldap --with-ldap=yes \
     &&  docker-php-ext-configure pgsql -with-pgsql=/usr/local/pgsql \
-    && docker-php-ext-install pgsql mysqli pdo_pgsql pdo_mysql mbstring zip exif pcntl gd ldap 
+    && docker-php-ext-install pgsql mysqli pdo_pgsql pdo_mysql pdo_sqlite mbstring zip exif pcntl gd ldap \
+    && docker-php-ext-enable pdo_sqlite
 
 RUN pecl install -o -f redis xdebug \
     &&  rm -rf /tmp/pear \
