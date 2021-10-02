@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\DeveloperController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,6 +15,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+Route::get('/developers', [DeveloperController::class, 'get']);
+Route::post('/developers', [DeveloperController::class, 'store']);
+
+Route::put('/developers/{id}', [DeveloperController::class, 'edit']);
+Route::get('/developers/{id}', [DeveloperController::class, 'getById']);
+Route::delete('/developers/{id}', [DeveloperController::class, 'delete']);
+
